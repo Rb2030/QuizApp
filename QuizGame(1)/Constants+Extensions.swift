@@ -35,6 +35,6 @@ let rightWrongRecentScoreIdentifier = "RightWrongRecentScoreIdentifier"
 let emojiHighScoreIdentifier = "EmojiHighScoreIdentifier"
 let emojiRecentScoreIdentifier = "EmojiRecentScoreIdentifier"
 
-let flatGreen = UIColor.init(red: 46/255, green: 204/255, blue: 113/255, alpha: 0.1)
+let flatGreen = UIColor.init(red: 10/255, green: 220/255, blue: 70/255, alpha: 0.1)
 let flatOrange = UIColor.init(red: 230/255, green: 126/255, blue: 34/255, alpha: 0.1)
 let flatRed = UIColor.init(red: 231/255, green: 76/255, blue: 60/255, alpha: 0.1)

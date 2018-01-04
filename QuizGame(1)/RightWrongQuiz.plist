@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>Questions</key>
+	<array>
+		<dict>
+			<key>Question</key>
+			<string>Shanghai is the most populated City in the World.</string>
+			<key>Correct Answer</key>
+			<string>Correct</string>
+		</dict>
+        <dict>
+            <key>Question</key>
+            <string>The biggest spider in the world is the giant huntsman.</string>
+            <key>Correct Answer</key>
+            <string>Correct</string>
+        </dict>
+        <dict>
+            <key>Question</key>
+            <string>Andy Green (UK), holds the fastest land speed record.</string>
+            <key>Correct Answer</key>
+            <string>Correct</string>
+        </dict>
+        <dict>
+            <key>Question</key>
+            <string>Apes have tails.</string>
+            <key>Correct Answer</key>
+            <string>False</string>
+        </dict>
+	</array>
+</dict>
+</plist>

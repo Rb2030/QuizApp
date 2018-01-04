@@ -2,7 +2,7 @@ import Foundation
 import UIKit
 import SnapKit
 
-class EmojiQuizViewController: UIViewController, UITextFieldDelegate {
+class RightWrongQuizViewController: UIViewController {
     
     private static let padding = 20
     private static let buttonPadding = 8
@@ -10,7 +10,6 @@ class EmojiQuizViewController: UIViewController, UITextFieldDelegate {
     private let contentView = UIView()
     private let questionView = UIView()
     private let answerView = UIView()
-    private let answerTextField = UITextField()
     private let countdownView = UIView()
     private let questionLabel = RoundedLabel()
     private let questionButton = RoundedButton()
@@ -18,22 +17,20 @@ class EmojiQuizViewController: UIViewController, UITextFieldDelegate {
     private let progressView = UIProgressView()
 
     
-    private let backgroundColor = UIColor.init(red:41/255.0, green:128/255.0, blue:185/255.0, alpha: 1.0)
-    private let foregroundColor = UIColor.init(red: 52/255.0, green:152/255.0, blue:219/255.0, alpha: 1.0)
+    private let backgroundColor = UIColor.init(red:189/255.0, green:195/255.0, blue:199/255.0, alpha: 1.0)
+    private let foregroundColor = UIColor.init(red: 236/255.0, green:240/255.0, blue:241/255.0, alpha: 1.0)
     
     private let quizLoader = QuizLoader()
     
     
     private var questionArray = [SimpleQuestion]()
     private var questionIndex = 0
-    //
     private var currentQuestion: SimpleQuestion!
     
     private var timer = Timer()
     private var score = 0
     
-    
-    private var highScore = UserDefaults.standard.integer(forKey: emojiHighScoreIdentifier)
+    private var highScore = UserDefaults.standard.integer(forKey: rightWrongHighScoreIdentifier)
     
     private var quizAlertView: QuizAlertView?
     
@@ -43,11 +40,6 @@ class EmojiQuizViewController: UIViewController, UITextFieldDelegate {
         
         view.backgroundColor = backgroundColor
         setupViews()
-        
-        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillShow), name: Notification.Name.UIKeyboardWillShow, object: nil)
-        
-        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillHide), name: Notification.Name.UIKeyboardWillHide, object: nil)
-
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -60,8 +52,8 @@ class EmojiQuizViewController: UIViewController, UITextFieldDelegate {
         answerView.translatesAutoresizingMaskIntoConstraints = false
         countdownView.translatesAutoresizingMaskIntoConstraints = false
         progressView.translatesAutoresizingMaskIntoConstraints = false
-        answerTextField.translatesAutoresizingMaskIntoConstraints = false
         questionLabel.translatesAutoresizingMaskIntoConstraints = false
+        questionButton.translatesAutoresizingMaskIntoConstraints = false
         
         
         view.addSubview(contentView)
@@ -74,26 +66,26 @@ class EmojiQuizViewController: UIViewController, UITextFieldDelegate {
         
         self.contentView.addSubview(questionView)
         self.questionView.snp.makeConstraints { (make) in
-            make.top.equalTo(contentView).offset(EmojiQuizViewController.padding)
-            make.leading.equalTo(contentView).offset(EmojiQuizViewController.padding)
-            make.trailing.equalTo(contentView).offset(-EmojiQuizViewController.padding)
+            make.top.equalTo(contentView).offset(RightWrongQuizViewController.padding)
+            make.leading.equalTo(contentView).offset(RightWrongQuizViewController.padding)
+            make.trailing.equalTo(contentView).offset(-RightWrongQuizViewController.padding)
             make.height.equalTo(contentView).multipliedBy(0.4)
         }
         
         self.contentView.addSubview(answerView)
         self.answerView.snp.makeConstraints { (make) in
-            make.top.equalTo(questionView.snp.bottom).offset(EmojiQuizViewController.padding)
+            make.top.equalTo(questionView.snp.bottom).offset(RightWrongQuizViewController.padding)
             make.leading.equalTo(questionView)
-            make.trailing.equalTo(questionView).offset(EmojiQuizViewController.padding)
+            make.trailing.equalTo(questionView).offset(RightWrongQuizViewController.padding)
             make.height.equalTo(contentView).multipliedBy(0.4)
         }
         
         self.contentView.addSubview(countdownView)
         self.countdownView.snp.makeConstraints{ (make) in
-            make.top.equalTo(answerView.snp.bottom).offset(EmojiQuizViewController.padding)
-            make.leading.equalTo(contentView).offset(EmojiQuizViewController.padding)
-            make.trailing.equalTo(contentView.snp.trailing).offset(-EmojiQuizViewController.padding)
-            make.bottom.equalTo(contentView).offset(EmojiQuizViewController.padding)
+            make.top.equalTo(answerView.snp.bottom).offset(RightWrongQuizViewController.padding)
+            make.leading.equalTo(contentView).offset(RightWrongQuizViewController.padding)
+            make.trailing.equalTo(contentView.snp.trailing).offset(-RightWrongQuizViewController.padding)
+            make.bottom.equalTo(contentView).offset(RightWrongQuizViewController.padding)
         }
         
         self.countdownView.addSubview(progressView)
@@ -102,25 +94,7 @@ class EmojiQuizViewController: UIViewController, UITextFieldDelegate {
             make.leading.equalTo(countdownView)
             make.trailing.equalTo(countdownView)
         }
-        
-        self.answerView.addSubview(answerTextField)
-        self.answerTextField.snp.makeConstraints{ (make) in
-            make.centerY.equalTo(answerView)
-            make.centerX.equalTo(answerView)
-            make.height.equalTo(answerView).multipliedBy(0.5)
-            make.leading.equalTo(answerView)
-            make.trailing.equalTo(answerView)
-        }
-        
-        answerTextField.textColor = UIColor.white
-        answerTextField.textAlignment = .center
-        answerTextField.font = UIFont.boldSystemFont(ofSize: 30.0)
-        answerTextField.adjustsFontSizeToFitWidth = true
-        answerTextField.autocorrectionType = .no
-        answerTextField.isEnabled = false
-        answerTextField.delegate = self
-        
-        self.questionView.addSubview(questionLabel)
+            
         self.questionLabel.snp.makeConstraints{ (make) in
             make.top.equalTo(questionView)
             make.leading.equalTo(questionView)
@@ -134,9 +108,7 @@ class EmojiQuizViewController: UIViewController, UITextFieldDelegate {
         questionLabel.textAlignment = .center
         questionLabel.numberOfLines = 4
         questionLabel.adjustsFontSizeToFitWidth = true
-        questionButton.translatesAutoresizingMaskIntoConstraints = false
-        
-        self.questionView.addSubview(questionButton)
+            
         self.questionButton.snp.makeConstraints{ (make) in
             make.top.equalTo(questionView)
             make.leading.equalTo(questionView)
@@ -144,18 +116,50 @@ class EmojiQuizViewController: UIViewController, UITextFieldDelegate {
             make.bottom.equalTo(questionView)
         }
         
-        self.questionButton.addTarget(self, action: #selector(questionButtonHandler), for: .touchUpInside)
-        questionButton.isEnabled = false
+        var answerButtonsConstraints = [
+            
+            self.answerButtons[0].snp.makeConstraints { (make) in
+                make.leading.equalTo(answerView)
+                make.trailing.equalTo(answerView)
+                make.top.equalTo(answerView)
+                make.bottom.equalTo(answerButtons[1].snp.top).offset(-RightWrongQuizViewController.buttonPadding)
+                make.height.equalTo(answerButtons[1])
+                make.width.equalTo(answerButtons[1])
+            },
+            
+            self.answerButtons[1].snp.makeConstraints { (make) in
+                make.leading.equalTo(answerView)
+                make.trailing.equalTo(answerView)
+                make.bottom.equalTo(answerView)
+
+            }
+        ]
         
+//        for index in 1..<answerButtons.count {
+//            let constraint : () = self.answerButtons[index].snp.makeConstraints { (make) in
+//                make.height.equalTo(answerButtons[index-1].snp.height)
+//                make.width.equalTo(answerButtons[index-1].snp.width)
+//            }
+//            answerButtonsConstraints.append(constraint)
+//        }
+        
+        for index in 0...1 {
+            let button = RoundedButton()
+            self.answerButtons.append(button)
+            button.translatesAutoresizingMaskIntoConstraints = false
+            self.answerView.addSubview(button)
+            index == 0 ? button.setTitle("Correct", for: .normal) : button.setTitle("Wrong", for: .normal)
+            button.addTarget(self, action: #selector(answerButtonHandler), for: .touchUpInside)
+        }
         
         progressView.transform = progressView.transform.scaledBy(x: 1, y: 10)
-        
+  
         loadQuestions()
     }
     
     func loadQuestions() {
         do {
-            questionArray = try quizLoader.loadSimpleQuiz(forQuiz: "EmojiQuiz")
+            questionArray = try quizLoader.loadSimpleQuiz(forQuiz: "RightWrongQuiz")
             loadNextQuestion()
         } catch {
             switch error {
@@ -175,11 +179,12 @@ class EmojiQuizViewController: UIViewController, UITextFieldDelegate {
     }
     
     func setTitlesForButtons() {
-        questionLabel.backgroundColor = foregroundColor
+        for button in answerButtons {
+            button.isEnabled = true
+            button.backgroundColor = foregroundColor
+            button.setTitleColor(UIColor.darkGray, for: .normal)
+        }
         questionLabel.text = currentQuestion.question
-        answerTextField.text = nil
-        answerTextField.placeholder = "Answer"
-        answerTextField.isEnabled = true
         startTimer()
     }
     
@@ -187,7 +192,7 @@ class EmojiQuizViewController: UIViewController, UITextFieldDelegate {
         progressView.progressTintColor = UIColor.green
         progressView.trackTintColor = UIColor.clear
         progressView.progress = 1.0
-        timer = Timer.scheduledTimer(timeInterval: 0.03, target: self, selector: #selector(updateProgressView), userInfo: nil, repeats: true)
+        timer = Timer.scheduledTimer(timeInterval: 0.01, target: self, selector: #selector(updateProgressView), userInfo: nil, repeats: true)
     }
     
     func updateProgressView() {
@@ -212,49 +217,34 @@ class EmojiQuizViewController: UIViewController, UITextFieldDelegate {
         questionIndex < questionArray.count ? loadNextQuestion() : showAlert(forReason: 2)
     }
     
-    func checkAnswer(withString string: String) {
+    func answerButtonHandler(_ sender: RoundedButton) {
         timer.invalidate()
-        answerTextField.isEnabled = false
-        if string == currentQuestion.correctAnswer {
-            questionLabel.backgroundColor = flatGreen
+        if sender.titleLabel?.text == currentQuestion.correctAnswer {
+            score += 1
+            questionLabel.text = "Tap to continue"
             questionButton.isEnabled = true
         } else {
-            questionLabel.backgroundColor = flatRed
+            sender.backgroundColor = flatRed
+            sender.setTitleColor(UIColor.white, for: .normal)
             showAlert(forReason: 1)
         }
-        questionLabel.text = currentQuestion.correctAnswer
-    }
-    
-    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
-        textField.resignFirstResponder()
-        if let string = textField.text?.uppercased() {
-            checkAnswer(withString: string)
-        }
-        
-        return true
-    }
-    
-    func keyboardWillShow(notification: NSNotification) {
-        if let keyboardSize = (notification.userInfo?[UIKeyboardFrameBeginUserInfoKey] as? NSValue)?.cgRectValue {
-            self.answerView.frame.origin.y -= keyboardSize.height
-        }
-    }
-    
-    func keyboardWillHide(notification: NSNotification) {
-        if let keyboardSize = (notification.userInfo?[UIKeyboardFrameBeginUserInfoKey] as? NSValue)?.cgRectValue {
-            self.answerView.frame.origin.y += keyboardSize.height
+        for button in answerButtons {
+            button.isEnabled = false
+            if button.titleLabel?.text == currentQuestion.correctAnswer {
+                button.backgroundColor = flatGreen
+                button.setTitleColor(UIColor.white, for: .normal)
+            }
         }
     }
     
     func showAlert(forReason reason: Int) {
-        
         switch reason {
         
         case 0:
             quizAlertView = QuizAlertView(withTitle: "You Lost", andMessage: "You ran out of time!", colors: [backgroundColor, foregroundColor])
         
         case 1:
-            quizAlertView = QuizAlertView(withTitle: "You Lost", andMessage: "You entered the wrong answer!", colors: [backgroundColor, foregroundColor])
+            quizAlertView = QuizAlertView(withTitle: "You Lost", andMessage: "You picked the wrong answer!", colors: [backgroundColor, foregroundColor])
             
         case 2:
             quizAlertView = QuizAlertView(withTitle: "You won", andMessage: "You answered all the questions correctly!", colors: [backgroundColor, foregroundColor])
@@ -284,12 +274,11 @@ class EmojiQuizViewController: UIViewController, UITextFieldDelegate {
     }
     
     func closeAlert() {
-
         if score > highScore {
             highScore = score
-            UserDefaults.standard.set(highScore, forKey: emojiHighScoreIdentifier)
+            UserDefaults.standard.set(highScore, forKey: rightWrongHighScoreIdentifier)
         }
-        UserDefaults.standard.set(score, forKey: emojiRecentScoreIdentifier)
+        UserDefaults.standard.set(score, forKey: rightWrongHighScoreIdentifier)
         _ = navigationController?.popViewController(animated: true)
     }
     

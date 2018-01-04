@@ -32,6 +32,9 @@ class GenericQuizViewController: UIViewController {
     
     private var timer = Timer()
     private var score = 0
+    
+    //Change Identifier
+    
     private var highScore = UserDefaults.standard.integer(forKey: multipleChoiceHighScoreIdentifier)
     
     private var quizAlertView: QuizAlertView?

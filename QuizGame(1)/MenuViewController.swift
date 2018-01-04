@@ -103,7 +103,7 @@ class MenuViewController: UIViewController {
         }
         
         self.contentView.snp.makeConstraints { (make) in
-            make.top.equalTo(topLayoutGuide.snp.bottom).offset(MenuViewController.padding)
+            make.top.equalTo(topLayoutGuide.snp.bottom)//.offset(MenuViewController.padding)
             make.leading.equalToSuperview()
             make.trailing.equalToSuperview()
             make.bottom.equalToSuperview()
@@ -111,7 +111,7 @@ class MenuViewController: UIViewController {
         
         self.logoView.snp.makeConstraints { (make) in
             make.centerX.equalTo(contentView)
-            make.top.equalTo(contentView)//.offset(MenuViewController.padding * 2)
+            make.top.equalTo(contentView).offset(MenuViewController.padding * 2)
             make.width.equalTo(contentView).multipliedBy(0.6)
             make.height.equalTo(contentView).multipliedBy(0.2)
         }
@@ -159,7 +159,7 @@ class MenuViewController: UIViewController {
             make.height.equalTo(contentView).multipliedBy(0.3)
             make.bottom.equalTo(contentView).offset(-30)
             
-            self.adjustedWidthConstraints.center = make.center.equalTo(contentView).constraint.update(priority: 800)
+            self.adjustedWidthConstraints.center = make.centerY.equalTo(contentView).constraint.update(priority: 800)
             self.adjustedWidthConstraints.left = make.trailing.equalTo(contentView.snp.leading).constraint.update(priority: 800)
             self.adjustedWidthConstraints.right = make.leading.equalTo(contentView.snp.trailing).constraint.update(priority: 800)
         }
@@ -215,9 +215,9 @@ class MenuViewController: UIViewController {
         case 1:
             vc = ImageQuizViewController()
         case 2:
-            print("Right or Wrong")
+            vc = RightWrongQuizViewController()
         case 3:
-            print("Emoji")
+            vc = EmojiQuizViewController()
         default:
             break
         }
