@@ -71,15 +71,6 @@ class MenuViewController: UIViewController {
     
     func setupViews() {
         
-        contentView.translatesAutoresizingMaskIntoConstraints = false
-        logoView.translatesAutoresizingMaskIntoConstraints = false
-        buttonView.translatesAutoresizingMaskIntoConstraints = false
-        scoreView.translatesAutoresizingMaskIntoConstraints = false
-        titleLabel.translatesAutoresizingMaskIntoConstraints = false
-        recentScoreLabel.translatesAutoresizingMaskIntoConstraints = false
-        highScoreLabel.translatesAutoresizingMaskIntoConstraints = false
-        
-        
         self.view.addSubview(contentView)
         self.contentView.addSubview(scoreView)
         self.scoreView.addSubview(titleLabel)
@@ -210,7 +201,6 @@ class MenuViewController: UIViewController {
         var vc: UIViewController?
         switch sender.tag {
         case 0:
-            //Multiple Choice
             vc = MultipleChoiceViewController()
         case 1:
             vc = ImageQuizViewController()

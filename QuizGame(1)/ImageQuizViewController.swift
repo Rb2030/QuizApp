@@ -47,16 +47,10 @@ class ImageQuizViewController: UIViewController {
     }
     
     func setupViews() {
-        contentView.translatesAutoresizingMaskIntoConstraints = false
-        questionView.translatesAutoresizingMaskIntoConstraints = false
-        answerView.translatesAutoresizingMaskIntoConstraints = false
-        countdownView.translatesAutoresizingMaskIntoConstraints = false
-        progressView.translatesAutoresizingMaskIntoConstraints = false
         
         for _ in 0...8 {
             let view = UIView()
             imageGridViews.append(view)
-            view.translatesAutoresizingMaskIntoConstraints = false
             questionView.addSubview(view)
             view.backgroundColor = foregroundColor
             
@@ -65,7 +59,6 @@ class ImageQuizViewController: UIViewController {
         for _ in 0...3 {
             let button = RoundedButton()
             answerButtons.append(button)
-            button.translatesAutoresizingMaskIntoConstraints = false
             answerView.addSubview(button)
             button.addTarget(self, action: #selector(answerButtonHandler), for: .touchUpInside)
             
@@ -334,7 +327,6 @@ class ImageQuizViewController: UIViewController {
     }
     
     func createQuizAlertView(withAlert alert: QuizAlertView) {
-        alert.translatesAutoresizingMaskIntoConstraints = false
         
         view.addSubview(alert)
         alert.snp.makeConstraints { (make) in

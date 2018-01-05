@@ -30,7 +30,7 @@
 		91D38E4B1FE4ED4B008D4564 /* EmojiQuiz.plist in Resources */ = {isa = PBXBuildFile; fileRef = 91D38E4A1FE4ED4B008D4564 /* EmojiQuiz.plist */; };
 		91D38E4D1FFB9393008D4564 /* EmojiQuizViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 91D38E4C1FFB9393008D4564 /* EmojiQuizViewController.swift */; };
 		91D38E4F1FFBD588008D4564 /* RightWrongQuiz.plist in Resources */ = {isa = PBXBuildFile; fileRef = 91D38E4E1FFBD588008D4564 /* RightWrongQuiz.plist */; };
-		91D38E511FFBD8EF008D4564 /* RightWrongQuizViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 91D38E501FFBD8EF008D4564 /* RightWrongQuizViewController.swift */; };
+		91D38E571FFE6D90008D4564 /* RightWrongQuizViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 91D38E561FFE6D90008D4564 /* RightWrongQuizViewController.swift */; };
 		BEA93CC90E2443C7BD686E63 /* Pods_QuizGame_1_.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0216641ABF63E8F823242A3D /* Pods_QuizGame_1_.framework */; };
 /* End PBXBuildFile section */
 
@@ -61,7 +61,7 @@
 		91D38E4A1FE4ED4B008D4564 /* EmojiQuiz.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = EmojiQuiz.plist; sourceTree = "<group>"; };
 		91D38E4C1FFB9393008D4564 /* EmojiQuizViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EmojiQuizViewController.swift; sourceTree = "<group>"; };
 		91D38E4E1FFBD588008D4564 /* RightWrongQuiz.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = RightWrongQuiz.plist; sourceTree = "<group>"; };
-		91D38E501FFBD8EF008D4564 /* RightWrongQuizViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RightWrongQuizViewController.swift; sourceTree = "<group>"; };
+		91D38E561FFE6D90008D4564 /* RightWrongQuizViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RightWrongQuizViewController.swift; sourceTree = "<group>"; };
 		A8ED6F683A670C00BED1FD9B /* Pods-QuizGame(1).debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-QuizGame(1).debug.xcconfig"; path = "Pods/Target Support Files/Pods-QuizGame(1)/Pods-QuizGame(1).debug.xcconfig"; sourceTree = "<group>"; };
 		D73388C21FFBC13152DD2F95 /* Pods-QuizGame(1).release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-QuizGame(1).release.xcconfig"; path = "Pods/Target Support Files/Pods-QuizGame(1)/Pods-QuizGame(1).release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -131,8 +131,8 @@
 			children = (
 				9154A5201FB09FF700F8E5E3 /* MenuViewController.swift */,
 				9154A53E1FB343BF00F8E5E3 /* MultipleChoiceViewController.swift */,
+				91D38E561FFE6D90008D4564 /* RightWrongQuizViewController.swift */,
 				91D38E3C1FE3E14B008D4564 /* GenericQuizViewController.swift */,
-				91D38E501FFBD8EF008D4564 /* RightWrongQuizViewController.swift */,
 				91D38E4C1FFB9393008D4564 /* EmojiQuizViewController.swift */,
 				91D38E3E1FE3E701008D4564 /* ImageQuizViewController.swift */,
 			);
@@ -344,7 +344,7 @@
 				9154A5211FB09FF700F8E5E3 /* MenuViewController.swift in Sources */,
 				917739CD1FD06CE6000EE834 /* QuizAlertView.swift in Sources */,
 				9154A5381FB0A17000F8E5E3 /* RoundedButton.swift in Sources */,
-				91D38E511FFBD8EF008D4564 /* RightWrongQuizViewController.swift in Sources */,
+				91D38E571FFE6D90008D4564 /* RightWrongQuizViewController.swift in Sources */,
 				9154A53A1FB0A18600F8E5E3 /* RoundedLabel.swift in Sources */,
 				91D38E4D1FFB9393008D4564 /* EmojiQuizViewController.swift in Sources */,
 				9154A51F1FB09FF700F8E5E3 /* AppDelegate.swift in Sources */,

@@ -15,21 +15,18 @@ class RightWrongQuizViewController: UIViewController {
     private let questionButton = RoundedButton()
     private var answerButtons = [RoundedButton]()
     private let progressView = UIProgressView()
-
+    
     
     private let backgroundColor = UIColor.init(red:189/255.0, green:195/255.0, blue:199/255.0, alpha: 1.0)
     private let foregroundColor = UIColor.init(red: 236/255.0, green:240/255.0, blue:241/255.0, alpha: 1.0)
     
     private let quizLoader = QuizLoader()
-    
-    
     private var questionArray = [SimpleQuestion]()
     private var questionIndex = 0
     private var currentQuestion: SimpleQuestion!
     
     private var timer = Timer()
     private var score = 0
-    
     private var highScore = UserDefaults.standard.integer(forKey: rightWrongHighScoreIdentifier)
     
     private var quizAlertView: QuizAlertView?
@@ -44,17 +41,10 @@ class RightWrongQuizViewController: UIViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         navigationController?.navigationBar.isHidden = false
+
     }
     
     func setupViews() {
-        contentView.translatesAutoresizingMaskIntoConstraints = false
-        questionView.translatesAutoresizingMaskIntoConstraints = false
-        answerView.translatesAutoresizingMaskIntoConstraints = false
-        countdownView.translatesAutoresizingMaskIntoConstraints = false
-        progressView.translatesAutoresizingMaskIntoConstraints = false
-        questionLabel.translatesAutoresizingMaskIntoConstraints = false
-        questionButton.translatesAutoresizingMaskIntoConstraints = false
-        
         
         view.addSubview(contentView)
         self.contentView.snp.makeConstraints { (make) in
@@ -75,8 +65,8 @@ class RightWrongQuizViewController: UIViewController {
         self.contentView.addSubview(answerView)
         self.answerView.snp.makeConstraints { (make) in
             make.top.equalTo(questionView.snp.bottom).offset(RightWrongQuizViewController.padding)
-            make.leading.equalTo(questionView)
-            make.trailing.equalTo(questionView).offset(RightWrongQuizViewController.padding)
+            make.leading.equalTo(contentView).offset(RightWrongQuizViewController.padding)
+            make.trailing.equalTo(contentView).offset(-RightWrongQuizViewController.padding)
             make.height.equalTo(contentView).multipliedBy(0.4)
         }
         
@@ -85,16 +75,17 @@ class RightWrongQuizViewController: UIViewController {
             make.top.equalTo(answerView.snp.bottom).offset(RightWrongQuizViewController.padding)
             make.leading.equalTo(contentView).offset(RightWrongQuizViewController.padding)
             make.trailing.equalTo(contentView.snp.trailing).offset(-RightWrongQuizViewController.padding)
-            make.bottom.equalTo(contentView).offset(RightWrongQuizViewController.padding)
+            make.bottom.equalTo(contentView).offset(-RightWrongQuizViewController.padding)
         }
         
         self.countdownView.addSubview(progressView)
         self.progressView.snp.makeConstraints{ (make) in
-            make.centerY.equalTo(countdownView)
             make.leading.equalTo(countdownView)
             make.trailing.equalTo(countdownView)
+            make.centerY.equalTo(countdownView)
         }
-            
+        
+        self.questionView.addSubview(questionLabel)
         self.questionLabel.snp.makeConstraints{ (make) in
             make.top.equalTo(questionView)
             make.leading.equalTo(questionView)
@@ -108,12 +99,22 @@ class RightWrongQuizViewController: UIViewController {
         questionLabel.textAlignment = .center
         questionLabel.numberOfLines = 4
         questionLabel.adjustsFontSizeToFitWidth = true
-            
+        
+        self.questionView.addSubview(questionButton)
         self.questionButton.snp.makeConstraints{ (make) in
             make.top.equalTo(questionView)
             make.leading.equalTo(questionView)
             make.trailing.equalTo(questionView)
             make.bottom.equalTo(questionView)
+        }
+        
+        for index in 0...1 {
+            let button = RoundedButton()
+            answerButtons.append(button)
+            button.translatesAutoresizingMaskIntoConstraints = false
+            answerView.addSubview(button)
+            index == 0 ? button.setTitle("Correct", for: .normal) : button.setTitle("Wrong", for: .normal)
+            button.addTarget(self, action: #selector(answerButtonHandler), for: .touchUpInside)
         }
         
         var answerButtonsConstraints = [
@@ -131,29 +132,13 @@ class RightWrongQuizViewController: UIViewController {
                 make.leading.equalTo(answerView)
                 make.trailing.equalTo(answerView)
                 make.bottom.equalTo(answerView)
-
+                
             }
         ]
         
-//        for index in 1..<answerButtons.count {
-//            let constraint : () = self.answerButtons[index].snp.makeConstraints { (make) in
-//                make.height.equalTo(answerButtons[index-1].snp.height)
-//                make.width.equalTo(answerButtons[index-1].snp.width)
-//            }
-//            answerButtonsConstraints.append(constraint)
-//        }
-        
-        for index in 0...1 {
-            let button = RoundedButton()
-            self.answerButtons.append(button)
-            button.translatesAutoresizingMaskIntoConstraints = false
-            self.answerView.addSubview(button)
-            index == 0 ? button.setTitle("Correct", for: .normal) : button.setTitle("Wrong", for: .normal)
-            button.addTarget(self, action: #selector(answerButtonHandler), for: .touchUpInside)
-        }
         
         progressView.transform = progressView.transform.scaledBy(x: 1, y: 10)
-  
+        
         loadQuestions()
     }
     
@@ -239,16 +224,16 @@ class RightWrongQuizViewController: UIViewController {
     
     func showAlert(forReason reason: Int) {
         switch reason {
-        
+            
         case 0:
             quizAlertView = QuizAlertView(withTitle: "You Lost", andMessage: "You ran out of time!", colors: [backgroundColor, foregroundColor])
-        
+            
         case 1:
             quizAlertView = QuizAlertView(withTitle: "You Lost", andMessage: "You picked the wrong answer!", colors: [backgroundColor, foregroundColor])
             
         case 2:
             quizAlertView = QuizAlertView(withTitle: "You won", andMessage: "You answered all the questions correctly!", colors: [backgroundColor, foregroundColor])
-        
+            
         default:
             break
         }
@@ -256,13 +241,13 @@ class RightWrongQuizViewController: UIViewController {
         if let qav = quizAlertView {
             
             quizAlertView?.closeButton.addTarget(self, action: #selector(closeAlert), for: .touchUpInside)
+            quizAlertView?.closeButton.setTitleColor(UIColor.darkGray, for: .normal)
             createQuizAlertView(withAlert: qav)
-        
+            
         }
     }
     
     func createQuizAlertView(withAlert alert: QuizAlertView) {
-        alert.translatesAutoresizingMaskIntoConstraints = false
         
         view.addSubview(alert)
         alert.snp.makeConstraints { (make) in
@@ -289,5 +274,3 @@ class RightWrongQuizViewController: UIViewController {
         }
     }
 }
-
-

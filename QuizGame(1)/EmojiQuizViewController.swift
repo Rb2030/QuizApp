@@ -55,14 +55,6 @@ class EmojiQuizViewController: UIViewController, UITextFieldDelegate {
     }
     
     func setupViews() {
-        contentView.translatesAutoresizingMaskIntoConstraints = false
-        questionView.translatesAutoresizingMaskIntoConstraints = false
-        answerView.translatesAutoresizingMaskIntoConstraints = false
-        countdownView.translatesAutoresizingMaskIntoConstraints = false
-        progressView.translatesAutoresizingMaskIntoConstraints = false
-        answerTextField.translatesAutoresizingMaskIntoConstraints = false
-        questionLabel.translatesAutoresizingMaskIntoConstraints = false
-        
         
         view.addSubview(contentView)
         self.contentView.snp.makeConstraints { (make) in
@@ -134,7 +126,6 @@ class EmojiQuizViewController: UIViewController, UITextFieldDelegate {
         questionLabel.textAlignment = .center
         questionLabel.numberOfLines = 4
         questionLabel.adjustsFontSizeToFitWidth = true
-        questionButton.translatesAutoresizingMaskIntoConstraints = false
         
         self.questionView.addSubview(questionButton)
         self.questionButton.snp.makeConstraints{ (make) in
@@ -272,7 +263,6 @@ class EmojiQuizViewController: UIViewController, UITextFieldDelegate {
     }
     
     func createQuizAlertView(withAlert alert: QuizAlertView) {
-        alert.translatesAutoresizingMaskIntoConstraints = false
         
         view.addSubview(alert)
         alert.snp.makeConstraints { (make) in

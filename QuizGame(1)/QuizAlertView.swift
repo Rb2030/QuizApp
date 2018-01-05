@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import SnapKit
 
 class QuizAlertView: UIView {
 
@@ -46,7 +47,7 @@ class QuizAlertView: UIView {
         alertView.addSubview(closeButton)
         
         
-        let alertViewConstraints = [
+        _ = [
         
         self.alertView.snp.makeConstraints{ (make) in
             make.centerX.equalTo(self)

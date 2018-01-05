@@ -52,13 +52,6 @@ class GenericQuizViewController: UIViewController {
     }
     
     func setupViews() {
-        contentView.translatesAutoresizingMaskIntoConstraints = false
-        questionView.translatesAutoresizingMaskIntoConstraints = false
-        answerView.translatesAutoresizingMaskIntoConstraints = false
-        countdownView.translatesAutoresizingMaskIntoConstraints = false
-        progressView.translatesAutoresizingMaskIntoConstraints = false
-        
-        
         
         view.addSubview(contentView)
         self.contentView.snp.makeConstraints { (make) in
@@ -191,7 +184,6 @@ class GenericQuizViewController: UIViewController {
     }
     
     func createQuizAlertView(withAlert alert: QuizAlertView) {
-        alert.translatesAutoresizingMaskIntoConstraints = false
         
         view.addSubview(alert)
         alert.snp.makeConstraints { (make) in

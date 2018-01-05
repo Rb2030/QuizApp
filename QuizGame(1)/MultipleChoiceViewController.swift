@@ -44,15 +44,6 @@ class MultipleChoiceViewController: UIViewController {
     }
     
     func setupViews() {
-        contentView.translatesAutoresizingMaskIntoConstraints = false
-        questionView.translatesAutoresizingMaskIntoConstraints = false
-        questionLabel.translatesAutoresizingMaskIntoConstraints = false
-        questionButton.translatesAutoresizingMaskIntoConstraints = false
-        answerView.translatesAutoresizingMaskIntoConstraints = false
-        countdownView.translatesAutoresizingMaskIntoConstraints = false
-        progressView.translatesAutoresizingMaskIntoConstraints = false
-        
-        
         
         for _ in 0...3 {
             let button = RoundedButton()
@@ -277,7 +268,6 @@ class MultipleChoiceViewController: UIViewController {
     }
     
     func createQuizAlertView(withAlert alert: QuizAlertView) {
-        alert.translatesAutoresizingMaskIntoConstraints = false
         
         view.addSubview(alert)
         alert.snp.makeConstraints { (make) in
