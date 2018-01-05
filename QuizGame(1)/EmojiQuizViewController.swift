@@ -23,20 +23,15 @@ class EmojiQuizViewController: UIViewController, UITextFieldDelegate {
     
     private let quizLoader = QuizLoader()
     
-    
     private var questionArray = [SimpleQuestion]()
     private var questionIndex = 0
-    //
     private var currentQuestion: SimpleQuestion!
     
     private var timer = Timer()
     private var score = 0
-    
-    
     private var highScore = UserDefaults.standard.integer(forKey: emojiHighScoreIdentifier)
     
     private var quizAlertView: QuizAlertView?
-    
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -209,6 +204,7 @@ class EmojiQuizViewController: UIViewController, UITextFieldDelegate {
         if string == currentQuestion.correctAnswer {
             questionLabel.backgroundColor = flatGreen
             questionButton.isEnabled = true
+            score += 1
         } else {
             questionLabel.backgroundColor = flatRed
             showAlert(forReason: 1)

@@ -50,6 +50,7 @@ class MenuViewController: UIViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         navigationController?.navigationBar.isHidden = true
+        updateScore()
     }
     
     func updateScore() {

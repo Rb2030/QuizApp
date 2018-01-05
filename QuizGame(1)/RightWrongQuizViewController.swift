@@ -31,6 +31,8 @@ class RightWrongQuizViewController: UIViewController {
     
     private var quizAlertView: QuizAlertView?
     
+    private let unlimitedMode = true
+    
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -108,11 +110,14 @@ class RightWrongQuizViewController: UIViewController {
             make.bottom.equalTo(questionView)
         }
         
+        questionButton.addTarget(self, action: #selector(questionButtonHandler), for: .touchUpInside)
+        questionButton.isEnabled = false
+        
         for index in 0...1 {
             let button = RoundedButton()
-            answerButtons.append(button)
-            button.translatesAutoresizingMaskIntoConstraints = false
             answerView.addSubview(button)
+            answerButtons.append(button)
+
             index == 0 ? button.setTitle("Correct", for: .normal) : button.setTitle("Wrong", for: .normal)
             button.addTarget(self, action: #selector(answerButtonHandler), for: .touchUpInside)
         }
@@ -199,6 +204,10 @@ class RightWrongQuizViewController: UIViewController {
     func questionButtonHandler() {
         questionButton.isEnabled = false
         questionIndex += 1
+        if unlimitedMode && questionIndex >= questionArray.count {
+            questionIndex = 0
+            questionArray.shuffle()
+        }
         questionIndex < questionArray.count ? loadNextQuestion() : showAlert(forReason: 2)
     }
     
@@ -263,7 +272,7 @@ class RightWrongQuizViewController: UIViewController {
             highScore = score
             UserDefaults.standard.set(highScore, forKey: rightWrongHighScoreIdentifier)
         }
-        UserDefaults.standard.set(score, forKey: rightWrongHighScoreIdentifier)
+        UserDefaults.standard.set(score, forKey: rightWrongRecentScoreIdentifier)
         _ = navigationController?.popViewController(animated: true)
     }
     
